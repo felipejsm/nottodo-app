@@ -1,19 +1,22 @@
 package com.nssp.nottodo.external;
 
-import org.springframework.data.relational.core.mapping.MappedCollection;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+@Entity
 @Table(name = "user")
 public class UserEnt {
 
     @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private String email;
     private String nick;
-    @MappedCollection(idColumn = "nottodo_id")
+    @OneToMany(
+            //cascade = CascadeType.,
+            orphanRemoval = true
+    )
     private Set<NotToDoEnt> notToDoEntList = new HashSet<>();
     private boolean enabled;
     public UserEnt(Long id, String name, String email, String nick, NotToDoEnt notToDoId, boolean enabled) {

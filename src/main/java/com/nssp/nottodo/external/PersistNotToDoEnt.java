@@ -1,59 +1,39 @@
 package com.nssp.nottodo.external;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-@Repository
-public class PersistNotToDoEnt implements PersistRepository<NotToDoEnt>, RowMapper<NotToDoEnt> {
-    private JdbcTemplate jdbcTemplate;
+@Component
+public class PersistNotToDoEnt {
+
+    private NotToDoRepository repository;
+
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public void setRepository(@Qualifier("nottodo") NotToDoRepository repository) {
+        this.repository = repository;
     }
-    @Override
+
     public NotToDoEnt create(NotToDoEnt type) {
-        var sql = "INSERT INTO nottodo(item_name, description, date, enabled) VALUES(?,?,?,?)";
-        type.setId((long) jdbcTemplate.update(sql, type.getItemName(), type.getDescription(), type.getDate(), type.isEnabled()));
-        return type;
+        var retorno =this.repository.save(type);
+        return retorno;
     }
 
-    @Override
     public List<NotToDoEnt> listAll() {
-        var sql = "SELECT * FROM nottodo";
-        return jdbcTemplate.query(sql, this::mapRow);
+        var retorno = this.repository.findAll();
+        return StreamSupport.stream(retorno.spliterator(), false).collect(Collectors.toList());
     }
-
-    @Override
     public Optional<NotToDoEnt> findById(Long id) {
-        if(id > 0) {
-            var sql = "SELECT * FROM nottodo WHERE id = ?";
-            return Optional.ofNullable(this.jdbcTemplate.queryForObject(sql, this::mapRow, id));
-        }
-        return Optional.empty();
+        return this.repository.findById(id);
     }
 
-    @Override
     public Boolean update(NotToDoEnt type) {
-        var sql = "UPDATE nottodo SET item_name = ?, description = ?, enabled = ?, date = ? WHERE id = ?";
-        var affectedRows = this.jdbcTemplate.update(sql, type.getItemName(), type.getDescription(), type.isEnabled(), type.getDate(), type.getId());
-        if(affectedRows > 0)
-            return true;
-        return false;
-    }
-
-    @Override
-    public NotToDoEnt mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new NotToDoEnt(resultSet.getLong("id"),
-                resultSet.getString("item_name"),
-                resultSet.getString("description"),
-                resultSet.getBoolean("enabled"),
-                resultSet.getString("date"));
+        var retorno = Optional.ofNullable(this.repository.save(type));
+        return retorno.isPresent();
     }
 }

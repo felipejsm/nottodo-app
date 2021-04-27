@@ -2,34 +2,33 @@ package com.nssp.nottodo.external;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@JdbcTest
-@ComponentScan
+@SpringBootTest
 class UserEntTest {
     @Autowired
     PersistUserEnt user;
     @Autowired
     PersistNotToDoEnt notToDo;
-    private NotToDoEnt notToDoEnt;
-    @BeforeAll
-    void loadNotToDoEnt() {
+    private static NotToDoEnt notToDoEnt;
+
+    public void loadNotToDoEnt() {
         var notToDoType = new NotToDoEnt();
         notToDoType.setDate(LocalDateTime.now().toString());
         notToDoType.setDescription("Não comprar pão na padaria Flor de Coimbra porque é muito ruim o atendimento e não vale a pena");
         notToDoType.setItemName("Pão");
         notToDoType.setEnabled(true);
-        this.notToDoEnt = this.notToDo.create(notToDoType);
+        notToDoEnt = notToDo.create(notToDoType);
     }
     @Test
     @DisplayName("Instantiate a User")
     void CreateUserEnt() {
+        loadNotToDoEnt();
         var userEnt = new UserEnt();
         userEnt.setNotToDoEntList(notToDoEnt);
         userEnt.setEmail("john.doe@email.com");
@@ -41,6 +40,7 @@ class UserEntTest {
     @Test
     @DisplayName("Instantiate an User and persist it")
     void PersistUserEntTest() {
+        loadNotToDoEnt();
         var userEnt = new UserEnt();
         userEnt.setNotToDoEntList(notToDoEnt);
         userEnt.setEmail("john.doe@email.com");
@@ -53,6 +53,7 @@ class UserEntTest {
     @Test
     @DisplayName("Retrieve all users")
     void RetrieveUserEntTest() {
+        loadNotToDoEnt();
         PersistUserEntTest();
         var users = user.listAll();
         assertNotNull(users, "not null");
@@ -61,6 +62,7 @@ class UserEntTest {
     @Test
     @DisplayName("Find User By Id")
     void FindByIdTest() throws InterruptedException {
+        loadNotToDoEnt();
         var userEnt = new UserEnt();
         userEnt.setNotToDoEntList(notToDoEnt);
         userEnt.setEmail("john.doe@email.com");
@@ -76,6 +78,7 @@ class UserEntTest {
     @Test
     @DisplayName("Update User")
     void UpdateUserTest() {
+        loadNotToDoEnt();
         var userEnt = new UserEnt();
         userEnt.setNotToDoEntList(notToDoEnt);
         userEnt.setEmail("john.doe@email.com");

@@ -1,19 +1,22 @@
-DROP TABLE IF EXISTS nottodo;
+SET MODE MYSQL;
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS nottodo;
+
 
 
 CREATE TABLE nottodo(
-    id IDENTITY,
-    item_name VARCHAR,
-    description VARCHAR,
-    date VARCHAR,
-    enabled bool
+                        id INT NOT NULL AUTO_INCREMENT,
+                        item_name VARCHAR,
+                        description VARCHAR,
+                        date VARCHAR,
+                        enabled bool
 );
-
 CREATE TABLE user(
-    id IDENTITY ,
-    name VARCHAR,
-    email VARCHAR,
-    nick VARCHAR,
-    enabled BOOL
+                     id INT NOT NULL AUTO_INCREMENT,
+                     name VARCHAR,
+                     email VARCHAR,
+                     nick VARCHAR,
+                     enabled BOOL,
+                     nottodo_id INT,
+                     CONSTRAINT FK_USER_NOTTODO FOREIGN KEY (nottodo_id) REFERENCES nottodo(id)
 );

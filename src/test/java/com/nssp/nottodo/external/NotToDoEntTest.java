@@ -2,16 +2,13 @@ package com.nssp.nottodo.external;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.context.annotation.ComponentScan;
-
+import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@JdbcTest
-@ComponentScan
+@SpringBootTest
 public class NotToDoEntTest {
     @Autowired
     PersistNotToDoEnt persistNotToDoEnt;
@@ -23,7 +20,6 @@ public class NotToDoEntTest {
         notToDoEnt.setDescription("");
         notToDoEnt.setDate("");
         notToDoEnt.setEnabled(true);
-        notToDoEnt.setUser(new UserEnt());
 
     }
 
@@ -47,7 +43,6 @@ public class NotToDoEntTest {
         assertNotNull(retorno);
     }
 
-    @Disabled
     @Test
     void FindByIdTest() {
         var notToDoEnt = PersistNotToDoEntTest();

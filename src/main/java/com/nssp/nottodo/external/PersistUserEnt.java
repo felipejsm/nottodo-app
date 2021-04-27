@@ -1,61 +1,51 @@
 package com.nssp.nottodo.external;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-@Repository
-public class PersistUserEnt implements PersistRepository<UserEnt>, RowMapper<UserEnt> {
+@Component
+public class PersistUserEnt {
+    private UserRepository repository;
+    private NotToDoRepository notToDoRepository;
 
-    private JdbcTemplate template;
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.template = jdbcTemplate;
+    public void setNotToDoRepository(@Qualifier("nottodo") NotToDoRepository notToDoRepository) {
+        this.notToDoRepository = notToDoRepository;
     }
-    @Override
+
+    @Autowired
+    public void setRepository(@Qualifier("user") UserRepository repository) {
+        this.repository = repository;
+    }
     public UserEnt create(UserEnt type) {
-        String saveSql = "INSERT INTO user (name, email, nick, enabled, nottodo_id) VALUES (?, ?, ?, ?, ?)";
-        type.setId((long) this.template. update(saveSql, type.getName(), type.getEmail(), type.getNick(), type.isEnabled(), type.getNotToDoEntList()));
-        return type;
+        //first save the child
+        var notToDo = type.getNotToDoEntList();
+        type.setNotToDoEntList(null);
+        var retorno = this.repository.save(type);
+        for(NotToDoEnt not : notToDo) {
+            retorno.setNotToDoEntList(not);
+        }
+        return this.repository.save(retorno);
     }
 
-    @Override
     public List<UserEnt> listAll() {
-        String sql = "SELECT * FROM user";
-        return this.template.query(sql, this::mapRow);
+        var retorno = this.repository.findAll();
+        return StreamSupport.stream(retorno.spliterator(), false).collect(Collectors.toList());
     }
 
-    @Override
     public Optional<UserEnt> findById(Long id) {
-        if(id > 0) {
-            String sql = "SELECT * FROM user WHERE id = ?";
-            return Optional.ofNullable(this.template.queryForObject(sql,this::mapRow, id));
-        }
-        return Optional.empty();
+        return this.repository.findById(id);
     }
 
-    @Override
     public Boolean update(UserEnt type) {
-        String sql = "UPDATE user SET name = ?, email = ?, nick = ?, enabled = ? WHERE id = ?";
-        int affectedRows = this.template.update(sql, type.getName(), type.getEmail(), type.getNick(),type.isEnabled(), type.getId());
-        if(affectedRows > 0) {
-            return true;
-        }
-        return false;
+        var retorno = Optional.ofNullable(this.repository.save(type));
+        return retorno.isPresent();
     }
 
-    @Override
-    public UserEnt mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new UserEnt(resultSet.getLong("id"),
-                resultSet.getString("name"),
-                resultSet.getString("email"),
-                resultSet.getString("nick"),
-                resultSet.getObject ("nottodo_id", NotToDoEnt.class),
-                resultSet.getBoolean("enabled"));
-    }
 }
