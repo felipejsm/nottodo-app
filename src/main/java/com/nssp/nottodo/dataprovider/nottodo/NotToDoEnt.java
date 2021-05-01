@@ -1,4 +1,4 @@
-package com.nssp.nottodo.external;
+package com.nssp.nottodo.dataprovider.nottodo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

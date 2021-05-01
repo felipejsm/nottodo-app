@@ -1,4 +1,4 @@
-package com.nssp.nottodo.entities;
+package com.nssp.nottodo.core.entities;
 
 public class NotToDo {
     private String itemName;

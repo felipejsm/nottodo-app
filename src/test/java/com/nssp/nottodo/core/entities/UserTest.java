@@ -1,4 +1,4 @@
-package com.nssp.nottodo.entities;
+package com.nssp.nottodo.core.entities;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;

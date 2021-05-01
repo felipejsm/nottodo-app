@@ -1,4 +1,6 @@
-package com.nssp.nottodo.external;
+package com.nssp.nottodo.dataprovider.user;
+
+import com.nssp.nottodo.dataprovider.nottodo.NotToDoEnt;
 
 import javax.persistence.*;
 import java.util.HashSet;

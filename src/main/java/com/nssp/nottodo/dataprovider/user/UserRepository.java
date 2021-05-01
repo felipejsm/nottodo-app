@@ -1,10 +1,9 @@
-package com.nssp.nottodo.external;
+package com.nssp.nottodo.dataprovider.user;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
-@Qualifier("nottodo")
+@Qualifier("user")
 @Repository
-public interface NotToDoRepository extends CrudRepository<NotToDoEnt, Long> {
+public interface UserRepository extends CrudRepository<UserEnt, Long> {
 }

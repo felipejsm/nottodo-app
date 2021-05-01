@@ -1,5 +1,9 @@
-package com.nssp.nottodo.external;
+package com.nssp.nottodo.dataprovider;
 
+import com.nssp.nottodo.dataprovider.nottodo.NotToDoEnt;
+import com.nssp.nottodo.dataprovider.nottodo.PersistNotToDoEnt;
+import com.nssp.nottodo.dataprovider.user.PersistUserEnt;
+import com.nssp.nottodo.dataprovider.user.UserEnt;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -58,7 +62,6 @@ class UserEntTest {
         var users = user.listAll();
         assertNotNull(users, "not null");
     }
-    @Disabled
     @Test
     @DisplayName("Find User By Id")
     void FindByIdTest() throws InterruptedException {

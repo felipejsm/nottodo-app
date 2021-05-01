@@ -1,5 +1,6 @@
-package com.nssp.nottodo.external;
-import org.junit.jupiter.api.*;
+package com.nssp.nottodo.dataprovider;
+import com.nssp.nottodo.dataprovider.nottodo.NotToDoEnt;
+import com.nssp.nottodo.dataprovider.nottodo.PersistNotToDoEnt;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

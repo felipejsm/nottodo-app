@@ -1,4 +1,4 @@
-package com.nssp.nottodo.entities;
+package com.nssp.nottodo.core.entities;
 
 public class User {
     private String name;
