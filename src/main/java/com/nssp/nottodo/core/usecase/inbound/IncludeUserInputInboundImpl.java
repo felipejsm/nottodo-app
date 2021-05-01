@@ -20,9 +20,10 @@ public class IncludeUserInputInboundImpl implements IncludeUserInputInbound {
         userEnt.setEmail(userDto.email);
         userEnt.setName(userDto.name);
         userEnt.setNick(userDto.nick);
-        userEnt.setEnabled(userDto.enabled);
+        userEnt.setEnabled(true);
         var newUserEnt = this.repository.create(userEnt);
         userDto.id = newUserEnt.getId();
+        userDto.enabled = newUserEnt.isEnabled();
         return userDto;
     }
 }

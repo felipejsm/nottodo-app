@@ -20,7 +20,7 @@ public class UserControllerTest {
     IncludeUserInputInbound include;
 
     @Test
-    void givenUsers_whenCreateUsers_thenStatus201() throws Exception {
+    void givenUsers_whenCreateUsers_thenStatus200() throws Exception {
         var dtoInput = new UserDto();
         dtoInput.email = "myemail@email.com";
         dtoInput.name = "João da Silva";
@@ -37,11 +37,11 @@ public class UserControllerTest {
         .contentType(MediaType.APPLICATION_JSON)
         .content(payload))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$[0].name").value(dtoOutput.name))
-        .andExpect(jsonPath("$[0].nick").value(dtoOutput.nick))
-        .andExpect(jsonPath("$[0].email").value(dtoOutput.email))
-        .andExpect(jsonPath("$[0].enabled").value(dtoOutput.enabled))
-        .andExpect(jsonPath("$[0].id").value(dtoOutput.id));
+        .andExpect(jsonPath("$.name").value(dtoOutput.name))
+        .andExpect(jsonPath("$.nick").value(dtoOutput.nick))
+        .andExpect(jsonPath("$.email").value(dtoOutput.email))
+        .andExpect(jsonPath("$.enabled").value(dtoOutput.enabled))
+        .andExpect(jsonPath("$.id").value(dtoOutput.id));
 
     }
 }
