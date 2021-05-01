@@ -20,19 +20,50 @@ public class UserControllerTest {
     IncludeUserInputInbound include;
 
     @Test
+    void givenUsers_whenUpdateUsers_thenStatus200() throws Exception {
+        // objeto de entrada para ser atualizado o nome
+        var dtoInput = new UserDto();
+        dtoInput.id = 1L;
+        dtoInput.email = "terminator.arnold@email.com";
+        dtoInput.name = "Arnold";
+        dtoInput.nick = "hasta_la_vista";
+        dtoInput.enabled = true;
+
+        var payload = String.format("{\"id\":\"%s\",\"email\":\"%s\",\"name\":\"%s\",\"nick\":\"%s\", \"enabled\":\"%s\"}",
+                dtoInput.id,
+                dtoInput.email,
+                dtoInput.name,
+                dtoInput.nick,
+                dtoInput.enabled);
+        // MockMVC <3
+        mock.perform(put("/v1/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(payload))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value(dtoInput.name))
+                .andExpect(jsonPath("$.nick").value(dtoInput.nick))
+                .andExpect(jsonPath("$.email").value(dtoInput.email))
+                .andExpect(jsonPath("$.enabled").value(dtoInput.enabled))
+                .andExpect(jsonPath("$.id").value(dtoInput.id));
+    }
+    @Test
     void givenUsers_whenCreateUsers_thenStatus200() throws Exception {
+        // Objeto de entrada
         var dtoInput = new UserDto();
         dtoInput.email = "myemail@email.com";
         dtoInput.name = "João da Silva";
         dtoInput.nick = "js";
+        var payload = String.format("{\"name\":\"%s\",\"nick\":\"%s\",\"email\":\"%s\"}", dtoInput.name, dtoInput.nick, dtoInput.email);
 
+        // Objeto de saída esperada
         var dtoOutput = new UserDto();
         dtoOutput.email = "myemail@email.com";
         dtoOutput.name = "João da Silva";
         dtoOutput.nick = "js";
         dtoOutput.id = 1L;
         dtoOutput.enabled = true;
-        var payload = String.format("{\"name\":\"%s\",\"nick\":\"%s\",\"email\":\"%s\"}", dtoInput.name, dtoInput.nick, dtoInput.email);
+
+        // MockMVC <3
          mock.perform(post("/v1/users")
         .contentType(MediaType.APPLICATION_JSON)
         .content(payload))
@@ -42,6 +73,5 @@ public class UserControllerTest {
         .andExpect(jsonPath("$.email").value(dtoOutput.email))
         .andExpect(jsonPath("$.enabled").value(dtoOutput.enabled))
         .andExpect(jsonPath("$.id").value(dtoOutput.id));
-
     }
 }
