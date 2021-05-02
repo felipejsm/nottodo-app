@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NotToDoGateway {
-    public NotToDoEnt create(NotToDoEnt type);
-    public List<NotToDoEnt> listAll();
-    public Optional<NotToDoEnt> findById(Long id);
-    public Boolean update(NotToDoEnt type);
+    NotToDoEnt create(NotToDoEnt type);
+    List<NotToDoEnt> listAll();
+    Optional<NotToDoEnt> findById(Long id);
+    Boolean update(NotToDoEnt type);
 }

@@ -49,5 +49,4 @@ public class PersistUserEnt implements UserGateway {
         var retorno = Optional.ofNullable(this.repository.save(type));
         return retorno.isPresent();
     }
-
 }

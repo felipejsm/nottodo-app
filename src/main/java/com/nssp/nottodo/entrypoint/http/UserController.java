@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public UserDto getById(@PathParam("id") Long id) {
+    public UserDto getById(@PathVariable("id") Long id) {
         return this.inputInbound.findUserById(id);
     }
 

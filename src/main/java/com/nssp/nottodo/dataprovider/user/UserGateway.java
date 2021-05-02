@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 public interface UserGateway {
-    public UserEnt create(UserEnt type);
-    public List<UserEnt> listAll();
-    public Optional<UserEnt> findById(Long id);
-    public Boolean update(UserEnt type);
+    UserEnt create(UserEnt type);
+    List<UserEnt> listAll();
+    Optional<UserEnt> findById(Long id);
+    Boolean update(UserEnt type);
 }
