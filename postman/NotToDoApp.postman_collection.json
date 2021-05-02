@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "dad3835a-80d7-4501-9469-da668102f068",
+		"name": "NotToDoApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Conde Drácula\",\r\n    \"email\":\"blood.sucker666@email.com\",\r\n    \"nick\":\"oh_my_bl00d\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/v1/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8088/v1/users/",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"v1",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":1,\r\n    \"name\":\"Conde Drácula\",\r\n    \"email\":\"blood.sucker666@email.com\",\r\n    \"nick\":\"AlucarD\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/v1/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8088/v1/users/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"v1",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
