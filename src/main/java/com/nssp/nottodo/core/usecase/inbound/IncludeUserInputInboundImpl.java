@@ -26,4 +26,19 @@ public class IncludeUserInputInboundImpl implements IncludeUserInputInbound {
         userDto.enabled = newUserEnt.isEnabled();
         return userDto;
     }
+
+    @Override
+    public UserDto updateUser(UserDto userDto) {
+        var exist = this.repository.findById(userDto.id);
+        if(exist.isPresent()) {
+            var userEnt = new UserEnt();
+            userEnt.setId(userDto.id);
+            userEnt.setEmail(userDto.email);
+            userEnt.setEnabled(userDto.enabled);
+            userEnt.setNick(userDto.nick);
+            userEnt.setName(userDto.name);
+            this.repository.update(userEnt);
+        }
+        return userDto;
+    }
 }

@@ -20,7 +20,27 @@ public class UserControllerTest {
     IncludeUserInputInbound include;
 
     @Test
+    void givenUsers_whenListUsers_thenStatus200() throws Exception {
+        givenUsers_whenUpdateUsers_thenStatus200();
+        var dtoInput = new UserDto();
+        dtoInput.id = 1L;
+        dtoInput.email = "terminator.arnold@email.com";
+        dtoInput.name = "Arnold";
+        dtoInput.nick = "hasta_la_vista";
+        dtoInput.enabled = true;
+        this.mock.perform(get("/v1/users/{id}","1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value(dtoInput.name))
+                .andExpect(jsonPath("$[0].nick").value(dtoInput.nick))
+                .andExpect(jsonPath("$[0].email").value(dtoInput.email))
+                .andExpect(jsonPath("$[0].enabled").value(dtoInput.enabled))
+                .andExpect(jsonPath("$[0].id").value(dtoInput.id));
+
+    }
+    @Test
     void givenUsers_whenUpdateUsers_thenStatus200() throws Exception {
+        givenUsers_whenCreateUsers_thenStatus200();
         // objeto de entrada para ser atualizado o nome
         var dtoInput = new UserDto();
         dtoInput.id = 1L;
@@ -48,6 +68,7 @@ public class UserControllerTest {
     }
     @Test
     void givenUsers_whenCreateUsers_thenStatus200() throws Exception {
+
         // Objeto de entrada
         var dtoInput = new UserDto();
         dtoInput.email = "myemail@email.com";
