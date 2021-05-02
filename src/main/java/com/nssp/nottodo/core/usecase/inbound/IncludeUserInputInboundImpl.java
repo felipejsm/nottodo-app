@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class IncludeUserInputInboundImpl implements IncludeUserInputInbound {
     private UserGateway repository;
@@ -40,5 +43,33 @@ public class IncludeUserInputInboundImpl implements IncludeUserInputInbound {
             this.repository.update(userEnt);
         }
         return userDto;
+    }
+
+    @Override
+    public UserDto findUserById(Long id) {
+        var retorno = this.repository.findById(id);
+        var userDto = new UserDto();
+        retorno.ifPresent( ent -> {
+            userDto.enabled = ent.isEnabled();
+            userDto.nick = ent.getNick();
+            userDto.id = ent.getId();
+            userDto.email = ent.getEmail();
+            userDto.name = ent.getName();
+        });
+        return userDto;
+    }
+
+    @Override
+    public List<UserDto> listAll() {
+        var users = this.repository.listAll();
+        return users.stream().map(ent -> {
+            var userDto = new UserDto();
+            userDto.enabled = ent.isEnabled();
+            userDto.nick = ent.getNick();
+            userDto.id = ent.getId();
+            userDto.email = ent.getEmail();
+            userDto.name = ent.getName();
+            return userDto;
+        }).collect(Collectors.toList());
     }
 }
