@@ -1,5 +1,13 @@
 # Not To Do App Dockerized
 
-This is a dockerized version of main branch
+Essa é uma versão '_containirizada_' da versão _main_
 
-## _Soon will place docker's commands down below_ 
+### Build
+docker build -t nottodo/nottodo .   
+### Run!
+docker run -p 8088:8080 nottodo/nottodo  
+
+### Postman
+
+
+
