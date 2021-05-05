@@ -10,8 +10,8 @@ public interface IncludeNotToDoInputOutbound {
 
     List<NotToDoDto> listAllByUserId(Long id);
 
-    NotToDoDto updateUser(NotToDoDto userDto);
+    NotToDoDto updateNotToDo(NotToDoDto userDto);
 
-    NotToDoDto findUserById(Long id);
+    NotToDoDto findNotToDoById(Long id);
 
 }

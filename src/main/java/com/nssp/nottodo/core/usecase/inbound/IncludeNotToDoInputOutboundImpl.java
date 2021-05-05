@@ -53,12 +53,12 @@ public class IncludeNotToDoInputOutboundImpl implements IncludeNotToDoInputOutbo
     }
 
     @Override
-    public NotToDoDto updateUser(NotToDoDto userDto) {
+    public NotToDoDto updateNotToDo(NotToDoDto userDto) {
         return null;
     }
 
     @Override
-    public NotToDoDto findUserById(Long id) {
+    public NotToDoDto findNotToDoById(Long id) {
         return null;
     }
 }
