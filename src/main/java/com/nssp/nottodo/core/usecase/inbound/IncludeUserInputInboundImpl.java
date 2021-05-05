@@ -1,6 +1,7 @@
 package com.nssp.nottodo.core.usecase.inbound;
 import com.nssp.nottodo.core.usecase.dto.NotToDoDto;
 import com.nssp.nottodo.dataprovider.nottodo.NotToDoEnt;
+import com.nssp.nottodo.dataprovider.nottodo.NotToDoGateway;
 import com.nssp.nottodo.dataprovider.user.UserEnt;
 import com.nssp.nottodo.dataprovider.user.UserGateway;
 import com.nssp.nottodo.core.usecase.dto.UserDto;

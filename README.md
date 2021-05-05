@@ -1,6 +1,6 @@
 # Not To Do App Dockerized
 
-Essa é uma versão '_containirizada_' da versão _main_
+Essa é uma versão '_containirizada_' da branch _main_
 
 ### Build
 docker build -t nottodo/nottodo .   

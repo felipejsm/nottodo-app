@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,8 +30,10 @@ public class PersistNotToDoEnt implements NotToDoGateway {
     }
 
     @Override
-    public List<NotToDoEnt> listAll() {
-        var retorno = this.repository.findAll();
+    public List<NotToDoEnt> listAllByUserId(Long id) {
+        List<Long> ids = new ArrayList<>();
+        ids.add(id);
+        var retorno = this.repository.findAllById(ids);
         return StreamSupport.stream(retorno.spliterator(), false).collect(Collectors.toList());
     }
     @Override

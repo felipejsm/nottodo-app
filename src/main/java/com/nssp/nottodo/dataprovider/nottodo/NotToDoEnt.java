@@ -1,9 +1,9 @@
 package com.nssp.nottodo.dataprovider.nottodo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.nssp.nottodo.dataprovider.user.UserEnt;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "nottodo")
@@ -11,17 +11,23 @@ public class NotToDoEnt {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(name = "item_name")
     private String itemName;
     private String description;
     private String date;
     private boolean enabled;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private UserEnt userEnt;
+    @Column(name = "update_date")
+    private String updateDate;
 
-    public NotToDoEnt(long id, String itemName, String description, boolean enabled, String date) {
+    public NotToDoEnt(long id, String itemName, String description, boolean enabled, String date, UserEnt userEnt) {
         this.id = id;
         this.itemName = itemName;
         this.description = description;
         this.enabled = enabled;
         this.date = date;
+        this.userEnt = userEnt;
     }
     public NotToDoEnt(){}
 
@@ -64,4 +70,21 @@ public class NotToDoEnt {
     public boolean isEnabled() {
         return enabled;
     }
+
+    public void setUserEnt(UserEnt userEnt) {
+        this.userEnt = userEnt;
+    }
+
+    public UserEnt getUserEnt() {
+        return userEnt;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
 }

@@ -1,15 +1,16 @@
 SET MODE MYSQL;
+
+
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS nottodo;
-
-
 
 CREATE TABLE nottodo(
                         id INT NOT NULL AUTO_INCREMENT,
                         item_name VARCHAR,
                         description VARCHAR,
                         date VARCHAR,
-                        enabled bool
+                        enabled bool,
+                        update_date VARCHAR
 );
 CREATE TABLE user(
                      id INT NOT NULL AUTO_INCREMENT,

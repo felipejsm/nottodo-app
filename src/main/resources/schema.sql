@@ -9,7 +9,8 @@ CREATE TABLE nottodo(
                         item_name VARCHAR,
                         description VARCHAR,
                         date VARCHAR,
-                        enabled bool
+                        enabled bool,
+                        update_date VARCHAR
 );
 CREATE TABLE user(
                      id INT NOT NULL AUTO_INCREMENT,
