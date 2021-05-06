@@ -7,4 +7,5 @@ public class NotToDoDto {
     public String date;
     public boolean enabled;
     public UserDto user;
+    public String updateDate;
 }

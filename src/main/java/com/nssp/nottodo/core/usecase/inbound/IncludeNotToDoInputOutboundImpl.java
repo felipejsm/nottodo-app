@@ -2,6 +2,7 @@ package com.nssp.nottodo.core.usecase.inbound;
 
 import com.nssp.nottodo.core.usecase.dto.NotToDoDto;
 import com.nssp.nottodo.core.usecase.dto.UserDto;
+import com.nssp.nottodo.dataprovider.nottodo.NotToDoEnt;
 import com.nssp.nottodo.dataprovider.nottodo.NotToDoGateway;
 import com.nssp.nottodo.dataprovider.user.UserGateway;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,11 @@ public class IncludeNotToDoInputOutboundImpl implements IncludeNotToDoInputOutbo
 
     @Override
     public NotToDoDto includeNotToDo(NotToDoDto notToDoDto) {
+        var ent = dtoToEnt(notToDoDto);
+        var retornoEnt = this.repository.create(ent);
+        notToDoDto.id = retornoEnt.getId();
 
-        return null;
+        return notToDoDto;
     }
 
     @Override
@@ -53,12 +57,57 @@ public class IncludeNotToDoInputOutboundImpl implements IncludeNotToDoInputOutbo
     }
 
     @Override
-    public NotToDoDto updateNotToDo(NotToDoDto userDto) {
-        return null;
+    public NotToDoDto updateNotToDo(NotToDoDto notToDoDto) {
+        var exist = this.repository.findById(notToDoDto.id);
+        exist.ifPresent(up -> {
+            var ent = dtoToEnt(notToDoDto);
+            this.repository.update(ent);
+        });
+        return notToDoDto;
     }
 
     @Override
     public NotToDoDto findNotToDoById(Long id) {
-        return null;
+        var exist = this.repository.findById(id);
+        var dto = new NotToDoDto();
+        if(exist.isPresent()) {
+            return entToDto(exist.get());
+        }
+        return dto;
+    }
+
+    private NotToDoEnt dtoToEnt(NotToDoDto notToDoDto) {
+        var ent = new NotToDoEnt();
+        ent.setId(notToDoDto.id);
+        ent.setDescription(notToDoDto.description);
+        ent.setItemName(notToDoDto.itemName);
+        ent.setEnabled(notToDoDto.enabled);
+        ent.setDate(notToDoDto.date);
+        ent.setUpdateDate(notToDoDto.updateDate);
+
+        var userEnt = this.userRepository.findById(notToDoDto.id);
+        if(userEnt.isPresent())
+            ent.setUserEnt(userEnt.get());
+        return  ent;
+    }
+    private NotToDoDto entToDto(NotToDoEnt ent) {
+        var dto = new NotToDoDto();
+        dto.id = ent.getId();
+        var userEnt = this.userRepository.findById(ent.getUserEnt().getId());
+        userEnt.ifPresent(user -> {
+            UserDto userDto = new UserDto();
+            userDto.id = user.getId();
+            userDto.nick = user.getNick();
+            userDto.name = user.getName();
+            userDto.email = user.getEmail();
+            userDto.enabled = user.isEnabled();
+            dto.user = userDto;
+        });
+        dto.enabled = ent.isEnabled();
+        dto.date = ent.getDate();
+        dto.updateDate = ent.getUpdateDate();
+        dto.description = ent.getDescription();
+        dto.itemName = ent.getItemName();
+        return dto;
     }
 }
