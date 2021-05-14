@@ -21,7 +21,7 @@ public class NotToDoController {
     public List<NotToDoDto> listAll(@RequestBody NotToDoDto notToDoDto, @PathVariable("user_id") Long id ) {
         return this.inputOutbound.listAllByUserId(id);
     }
-    @GetMapping("/items[{id}")
+    @GetMapping("/items/{id}")
     public NotToDoDto get(@PathVariable Long id) {
         return this.inputOutbound.findNotToDoById(id);
     }

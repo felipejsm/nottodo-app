@@ -25,7 +25,7 @@ public class NotToDoControllerTest {
 
     @Autowired
     IncludeNotToDoInputOutbound include;
-
+/*
     @Test
     void givenNotToDo_whenFindAllNotToDo_thenStatus200() throws Exception {
         var dtoInput = new NotToDoDto();
@@ -40,4 +40,6 @@ public class NotToDoControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].enabled").value(dtoInput.enabled));
     }
+    */
+
 }

@@ -85,7 +85,7 @@ public class IncludeNotToDoInputOutboundImpl implements IncludeNotToDoInputOutbo
         ent.setDate(notToDoDto.date);
         ent.setUpdateDate(notToDoDto.updateDate);
 
-        var userEnt = this.userRepository.findById(notToDoDto.id);
+        var userEnt = this.userRepository.findById(notToDoDto.user.id);
         if(userEnt.isPresent())
             ent.setUserEnt(userEnt.get());
         return  ent;
