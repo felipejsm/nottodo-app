@@ -9,8 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.PlatformTransactionManager;
 
+import javax.transaction.Transaction;
+import javax.transaction.Transactional;
+import javax.transaction.TransactionalException;
 import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -40,6 +45,6 @@ public class NotToDoControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].enabled").value(dtoInput.enabled));
     }
-    */
 
+*/
 }

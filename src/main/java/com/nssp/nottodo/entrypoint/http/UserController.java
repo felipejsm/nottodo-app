@@ -13,8 +13,7 @@ import java.util.List;
 @RequestMapping("/v1")
 public class UserController {
     private IncludeUserInputInbound inputInbound;
-    @Autowired
-    void setInputInbound(IncludeUserInputInbound inputInbound){
+    public UserController(IncludeUserInputInbound inputInbound) {
         this.inputInbound = inputInbound;
     }
     @PostMapping("/users")

@@ -8,6 +8,7 @@ import com.nssp.nottodo.dataprovider.user.UserGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class IncludeNotToDoInputOutboundImpl implements IncludeNotToDoInputOutbo
         var exist = this.repository.findById(notToDoDto.id);
         exist.ifPresent(up -> {
             var ent = dtoToEnt(notToDoDto);
+            ent.setUpdateDate(LocalDateTime.now().toString());
             this.repository.update(ent);
         });
         return notToDoDto;

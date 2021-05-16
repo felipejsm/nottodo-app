@@ -12,13 +12,13 @@ import java.util.List;
 @RequestMapping("/v1")
 public class NotToDoController {
     private IncludeNotToDoInputOutbound inputOutbound;
-    @Autowired
-    void setInputOutbound(IncludeNotToDoInputOutbound inputOutbound) {
+
+    public NotToDoController(IncludeNotToDoInputOutbound inputOutbound) {
         this.inputOutbound = inputOutbound;
     }
 
-    @GetMapping("/items/{user_id}")
-    public List<NotToDoDto> listAll(@RequestBody NotToDoDto notToDoDto, @PathVariable("user_id") Long id ) {
+    @GetMapping("/items/users/{id}")
+    public List<NotToDoDto> listAll(@RequestBody NotToDoDto notToDoDto, @PathVariable("id") Long id ) {
         return this.inputOutbound.listAllByUserId(id);
     }
     @GetMapping("/items/{id}")
