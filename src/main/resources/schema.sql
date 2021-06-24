@@ -12,7 +12,7 @@ CREATE TABLE nottodo(
                         enabled bool
 );
 CREATE TABLE user(
-                     id INT NOT NULL AUTO_INCREMENT,
+                     id VARCHAR NOT NULL,
                      name VARCHAR,
                      email VARCHAR,
                      nick VARCHAR,

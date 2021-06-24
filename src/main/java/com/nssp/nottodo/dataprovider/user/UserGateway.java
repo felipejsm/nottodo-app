@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface UserGateway {
     UserEnt create(UserEnt type);
     List<UserEnt> listAll();
-    Optional<UserEnt> findById(Long id);
+    Optional<UserEnt> findById(String id);
     Boolean update(UserEnt type);
 }

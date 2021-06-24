@@ -1,6 +1,7 @@
 package com.nssp.nottodo.dataprovider.user;
 
 import com.nssp.nottodo.dataprovider.nottodo.NotToDoEnt;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,8 +11,9 @@ import java.util.Set;
 public class UserEnt {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    private String id;
     private String name;
     private String email;
     private String nick;
@@ -21,7 +23,7 @@ public class UserEnt {
     )
     private Set<NotToDoEnt> notToDoEntList = new HashSet<>();
     private boolean enabled;
-    public UserEnt(Long id, String name, String email, String nick, NotToDoEnt notToDoId, boolean enabled) {
+    public UserEnt(String id, String name, String email, String nick, NotToDoEnt notToDoId, boolean enabled) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -31,10 +33,10 @@ public class UserEnt {
     }
     public UserEnt() {}
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

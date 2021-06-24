@@ -72,7 +72,7 @@ public class IncludeUserInputInboundImpl implements IncludeUserInputInbound {
 
     @Override
     public UserDto findUserById(Long id) {
-        var retorno = this.repository.findById(id);
+        var retorno = this.repository.findById(String.valueOf(id));
         var userDto = new UserDto();
         retorno.ifPresent( ent -> {
             userDto.enabled = ent.isEnabled();

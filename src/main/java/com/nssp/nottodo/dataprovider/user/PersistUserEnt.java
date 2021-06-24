@@ -41,7 +41,7 @@ public class PersistUserEnt implements UserGateway {
         return StreamSupport.stream(retorno.spliterator(), false).collect(Collectors.toList());
     }
     @Override
-    public Optional<UserEnt> findById(Long id) {
+    public Optional<UserEnt> findById(String id) {
         return this.repository.findById(id);
     }
     @Override
